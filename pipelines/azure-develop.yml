@@ -37,12 +37,12 @@ stages:
                     replaceExistingArchive: true
                 displayName: 'Archive Files'
 
-              # - task: CopyFiles@2
-              #   displayName: 'Copy Files'
-              #   inputs:
-              #     SourceFolder: '$(Build.ArtifactStagingDirectory)'
-              #     Contents: '$(Build.BuildId).zip'
-              #     TargetFolder: '$(Build.ArtifactStagingDirectory)/ArtifactsToBePublished'
+              - task: CopyFiles@2
+                displayName: 'Copy Files'
+                inputs:
+                  SourceFolder: '$(Build.ArtifactStagingDirectory)'
+                  Contents: '$(Build.BuildId).zip'
+                  TargetFolder: '$(Build.ArtifactStagingDirectory)/ArtifactsToBePublished'
 
               - task: PublishBuildArtifacts@1
                 displayName: 'Publish Artifact'
