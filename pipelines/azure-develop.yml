@@ -51,6 +51,8 @@ stages:
                   ArtifactName: 'App'
         - job: Deploy
           displayName: Deploying
+          dependsOn: Build
+          condition: succeeded('Build')
           steps:
             - task: AzureWebApp@1
               inputs:
