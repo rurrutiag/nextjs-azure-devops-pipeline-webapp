@@ -1,0 +1,24 @@
+parameters:
+    - name: path
+      type: string
+      default: package.json
+    - name: vars
+      type: object
+      default:
+          - name
+          - project
+          - version
+
+stages:
+    - stage: ReadProjectInfo
+      displayName: Reading Project Info
+      jobs:
+          - job: Variables
+            displayName: Read package.json
+            steps:
+                - ${{ each member in parameters.vars }}:
+                      - bash: |
+                            val=$(cat ${{ parameters.path }} | grep ${{ member }} | head -1 | awk -F: '{ print $2 }' | sed 's/[",]//g' | tr -d '[[:space:]]')
+                            echo "##vso[task.setvariable variable=value;isOutput=true;]$val"
+                        name: ${{ member }}
+                        displayName: Reading ${{ member }}
