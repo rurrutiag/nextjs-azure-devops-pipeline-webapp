@@ -45,17 +45,17 @@ stages:
                 inputs:
                   PathtoPublish: '$(Build.ArtifactStagingDirectory)\ArtifactsToBePublished'
         - job: Deploy
-              - deployment: Deploy
-                displayName: Deploying
-                environment: 'develop'
-                steps:
-                  - task: AzureWebApp@1
-                    inputs:
-                      azureSubscription: 'devops-landing-page'
-                      resourceGroupName: 'rg_dev_rutia_landing' 
-                      appType: 'webAppLinux'
-                      appName: 'rutia-dev-landing-page'
-                      deployToSlotOrASE: true
-                      slotName: Production
-                      package: '$(Build.ArtifactStagingDirectory)\ArtifactsToBePublished'
-                    displayName: Deploy to Azure Web App
+          - deployment: Deploy
+            displayName: Deploying
+            environment: 'develop'
+            steps:
+              - task: AzureWebApp@1
+                inputs:
+                  azureSubscription: 'devops-landing-page'
+                  resourceGroupName: 'rg_dev_rutia_landing' 
+                  appType: 'webAppLinux'
+                  appName: 'rutia-dev-landing-page'
+                  deployToSlotOrASE: true
+                  slotName: Production
+                  package: '$(Build.ArtifactStagingDirectory)\ArtifactsToBePublished'
+                displayName: Deploy to Azure Web App
