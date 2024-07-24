@@ -26,6 +26,8 @@ stages:
               - script: |
                   npm install
                   npm run build
+                  mv .next/static .next/standalone/.next/static
+                  # mv public .next/standalone/public
                 displayName: 'Building App'
 
               - task: ArchiveFiles@2
