@@ -16,7 +16,7 @@ stages:
   - stage: Develop
     displayName: Develop
     jobs:
-        - job: Next Build
+        - job: Build
           steps:
               - task: UseNode@1
                 inputs:
