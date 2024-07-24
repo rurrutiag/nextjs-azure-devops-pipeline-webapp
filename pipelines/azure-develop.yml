@@ -28,7 +28,7 @@ stages:
                   npm run build
                 displayName: 'Building App'
 
-              - task: ArchiveFiles@1
+              - task: ArchiveFiles@2
                 inputs:
                     rootFolder: '$(System.DefaultWorkingDirectory)'
                     includeRootFolder: false
@@ -54,6 +54,8 @@ stages:
           dependsOn: Build
           condition: succeeded('Build')
           steps:
+            - download: current
+              artifact: App
             - task: AzureWebApp@1
               inputs:
                 azureSubscription: 'devops-landing-page'
@@ -62,5 +64,5 @@ stages:
                 appName: 'rutia-dev-landing-page'
                 deployToSlotOrASE: true
                 slotName: Production
-                package: '$(Build.ArtifactStagingDirectory)/ArtifactsToBePublished/$(Build.BuildId).zip'
+                package: '$(Pipeline.Workspace)/App/$(Build.BuildId).zip'
               displayName: Deploy to Azure Web App
