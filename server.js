@@ -8,7 +8,7 @@ const { create } = require('domain')
 const stage = process.env.NODE_ENV !== 'production';
 const hostname = '0.0.0.0';
 const port = process.env.PORT || 8080;
-const app = next({ dev, hostname, port });
+const app = next({ stage, hostname, port });
 const handle = app.getRequestHandler();
 
 const mimeTypes = {
