@@ -16,7 +16,10 @@ const mimeTypes = {
     '.png': 'image/png',
     '.jpg': 'image/jpeg',
     '.gif': 'image/gif',
-    // Agrega más tipos de contenido si es necesario
+    '.ico': 'image/x-icon',
+    '.html': 'text/html',
+    '.css': 'text/css',
+    '.js': 'application/javascript',
 };
 
 app.prepare().then(() => {
@@ -26,7 +29,7 @@ app.prepare().then(() => {
             const { pathname } = parsedUrl;
             if (pathname.startsWith('/')) {
                 const filePath = path.join(__dirname, 'public', pathname);
-                if (fs.existsSync(filePath)) {
+                if (fs.existsSync(filePath) && !fs.lstatSync(filePath).isDirectory()) {
                     const ext = path.extname(filePath);
                     const contentType = mimeTypes[ext] || 'application/octet-stream';
                     res.writeHead(200, { 'Content-Type': contentType });
