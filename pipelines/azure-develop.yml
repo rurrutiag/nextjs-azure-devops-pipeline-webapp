@@ -60,11 +60,11 @@ stages:
               artifact: App
             - task: AzureWebApp@1
               inputs:
-                azureSubscription: 'devops-landing-page'
-                resourceGroupName: 'rg_dev_rutia_landing' 
+                azureSubscription: '<Azure-subscription>'
+                resourceGroupName: '<Resource-group-name>' 
                 appType: 'webAppLinux'
-                appName: 'rutia-dev-landing-page'
+                appName: '<App-name>'
                 deployToSlotOrASE: true
-                slotName: Production
+                slotName: <slot-name>
                 package: '$(Pipeline.Workspace)/App/$(Build.BuildId).zip'
               displayName: Deploy to Azure Web App
