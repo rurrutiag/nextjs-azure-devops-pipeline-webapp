@@ -14,12 +14,19 @@ let nextRequestHandler
 
 const server = http.createServer(async (req, res) => {
     const parsedUrl = url.parse(req.url, true)
+    const filePath = path.join(__dirname, 'public', parsedUrl.pathname)
     try {
         if(parsedUrl.pathname.startsWith('/')) {
-            const filePath = path.join(__dirname, 'public', parsedUrl.pathname)
             if (fs.existsSync(filePath)) {
+                const mimeTypes = {
+                    '.svg': 'image/svg+xml',
+                    '.png': 'image/png',
+                    '.jpg': 'image/jpeg',
+                    '.gif': 'image/gif',
+                    // Agrega más tipos de contenido si es necesario
+                };
                 const ext = path.extname(filePath)
-                const contentType = ext === '.svg' ? 'image/svg+xml' : 'application/octet-stream'
+                const contentType = mimeTypes[ext] || 'application/octet-stream';
                 res.writeHead(200, { 'Content-Type': contentType })
                 return fs.createReadStream(filePath).pipe(res)
             }
