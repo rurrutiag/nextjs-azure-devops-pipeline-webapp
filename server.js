@@ -1,5 +1,5 @@
-const NextServer = require('next/dist/server/next-server').default
 const fs = require('fs')
+const NextServer = require('next/dist/server/next-server').default
 const http = require("http")
 const path = require("path")
 const url = require("url")
@@ -15,10 +15,14 @@ let nextRequestHandler
 const server = http.createServer(async (req, res) => {
     const parsedUrl = url.parse(req.url, true)
     try {
-        if(parsedUrl.pathname.startsWith('/public/')) {
-            const filePath = path.join(__dirname, parsedUrl.pathname)
-            res.writeHead(200, { 'Content-Type': 'image/svg+xml' })
-            return fs.createReadStream(filePath).pipe(res)
+        if(parsedUrl.pathname.startsWith('/')) {
+            const filePath = path.join(__dirname, 'public', parsedUrl.pathname)
+            if (fs.existsSync(filePath)) {
+                const ext = path.extname(filePath)
+                const contentType = ext === '.svg' ? 'image/svg+xml' : 'application/octet-stream'
+                res.writeHead(200, { 'Content-Type': contentType })
+                return fs.createReadStream(filePath).pipe(res)
+            }
         }
         await nextRequestHandler(req, res, parsedUrl)
     } catch (err) {
